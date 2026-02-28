@@ -12,11 +12,11 @@ Task factory — turns Mentor's strategic parameters into concrete math problems
 - **Language**: Go
 - **Framework**: Gin (HTTP), GORM (ORM)
 - **Database**: PostgreSQL (task templates, task instances)
-- **Events**: Dapr pub/sub over Kafka
+- **Events**: Kafka pub/sub
 
-## API & Communication (Dapr)
-- **Inbound**: REST API (GET /tasks/next, GET /tasks/{id}), Dapr invocation from UI
-- **Outbound**: Dapr invoke → mathtrail-llm-taskgen (generate problem)
+## API & Communication
+- **Inbound**: REST API (GET /tasks/next, GET /tasks/{id}), HTTP invocation from UI
+- **Outbound**: HTTP invoke → mathtrail-llm-taskgen (generate problem)
 - **Subscribes**: `mentor.strategy.updated` (receive generation parameters)
 - **Publishes**: `task.attempt.completed` (notify Profile + Mentor)
 
@@ -39,5 +39,5 @@ Standard `infra/` layout:
 
 ## Roadmap
 1. Define Task data model (templates, instances, attempts)
-2. Implement Dapr subscriber for `mentor.strategy.updated`
+2. Implement Kafka subscriber for `mentor.strategy.updated`
 3. Build REST API for task delivery (GET /tasks/next with difficulty filter)
